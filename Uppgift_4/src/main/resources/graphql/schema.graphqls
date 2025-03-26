@@ -1,0 +1,20 @@
+type Match {
+    id: String
+    teamA: String
+    teamB: String
+    scoreA: Int
+    scoreB: Int
+}
+
+# Query för att hämta alla matcher
+type Query {
+    matches: [Match]       # Hämta alla matcher
+    match(id: String): Match # Hämta en match baserat på id
+}
+
+# Mutationer för att skapa, uppdatera och radera matcher
+type Mutation {
+    addMatch(teamA: String, teamB: String, scoreA: Int, scoreB: Int): Match
+    updateMatch(id: String, scoreA: Int, scoreB: Int): Match
+    deleteMatch(id: String): String
+}
