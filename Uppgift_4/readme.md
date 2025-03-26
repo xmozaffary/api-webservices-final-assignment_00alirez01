@@ -2,6 +2,10 @@
 
 (Kortfattad beskrivning av vad uppgiften innebär och dess syfte.)
 
+
+Uppgiften innebär att skapa en enkel GraphQL-server som hanterar sportresultat, där du implementerar funktioner för att hantera matcher och resultat. Målet är att använda GraphQL för att skapa en API som tillåter CRUD-operationer (Create, Read, Update, Delete) för sportresultat.
+Syftet med uppgiften är att ge praktisk erfarenhet av att arbeta med GraphQL i en Spring Boot-applikation, samt att jämföra fördelarna med GraphQL över REST.
+
 ### Förklara skillnaden mellan GraphQL och REST. (VG)
 
 (dina tankar här)
@@ -14,23 +18,61 @@
 
 (Instruktioner för hur applikationen byggs och körs. Om externa verktyg krävs, beskriv hur dessa installeras och används.)
 
+#### Färutsättningar
+
+    - Java development kit 21
+    - Maven - för att bygga och hantera beroendet
+
+#### Bygga och köra applikation
+
+    - Skriva mvn clean package för att bygga applikationen
+    - mvn spring-boot:run för att köra applikationen
+
 ## 3. Användning av API:et
 
 (Beskrivning av GraphQL-endpoints och exempelanrop.)
 
 ### Exempel på GraphQL-anrop:
 
-#### Fråga:
+#### Hämta alla matcher:
 
 ```graphql
-query {
-    getMatchResults {
-        matchId
-        teamA
-        teamB
-        scoreA
-        scoreB
-    }
+{
+  "query": "query { matches { id teamA teamB scoreA scoreB } }"
+}
+
+```
+
+#### Svar:
+
+```json
+{
+  "data": {
+    "matches": [
+      {
+        "id": "1",
+        "teamA": "Team Red",
+        "teamB": "Team Blue",
+        "scoreA": 4,
+        "scoreB": 2
+      },
+      {
+        "id": "2",
+        "teamA": "Team Green",
+        "teamB": "Team Yellow",
+        "scoreA": 3,
+        "scoreB": 3
+      }
+    ]
+  }
+}
+```
+
+#### Lägga till en ny match:
+
+```graphql
+{
+  "query": "mutation { addMatch(teamA: \"team red\", teamB: \"Team Blue\", scoreA: 3, scoreB: 2) { id teamA teamB scoreA scoreB } }"
 }
 ```
 
@@ -38,33 +80,98 @@ query {
 
 ```json
 {
-    "data": {
-        "getMatchResults": [
-            {
-                "matchId": 1,
-                "teamA": "Team X",
-                "teamB": "Team Y",
-                "scoreA": 2,
-                "scoreB": 1
-            }
-        ]
+  "data": {
+    "addMatch": {
+      "id": "3",
+      "teamA": "Team red",
+      "teamB": "Team Blue",
+      "scoreA": 3,
+      "scoreB": 2
     }
+  }
 }
+```
+
+#### Ta bort en match:
+
+```graphql
+{
+  "query": "mutation { deleteMatch(id: \"3\") }"
+}
+
+
+```
+
+#### Svar:
+
+```json
+{
+  "data": {
+    "deleteMatch": "Match with id 3 deleted."
+  }
+}
+```
+
+#### Uppdatera en match:
+
+```graphql
+{
+  "query": "mutation { updateMatch(id: \"1\", scoreA: 4, scoreB: 2) { id teamA teamB scoreA scoreB } }"
+}
+
+
+
+```
+
+#### Svar:
+
+```json
+{
+  "data": {
+    "updateMatch": {
+      "id": "1",
+      "teamA": "Team Red",
+      "teamB": "Team Blue",
+      "scoreA": 4,
+      "scoreB": 2
+    }
+  }
+}
+
 ```
 
 ## 4. Felhantering
 
 (Vilka typer av fel kan uppstå och hur de hanteras. Exempel på felmeddelanden och statuskoder som returneras.)
 
+Flera fel kan uppstå eftersom användaren kan göra komplexa förfrågningar.
+
+#### Fel i fråga:
+```graphql
+{
+"query": "query { match { id teamA teamB scoreA scoreB } }"
+}
+```
+Det ska vara matches istället för match om man vill anropa flera match. man får null om man skriver fel syntax.
+
+En annan fel som kan uppstå är att om man skickar ett ogiltig arument.
+
+
+
 ## 5. Tester
 
 (Beskriv hur GraphQL API:et har testats. Om tester är automatiserade, förklara hur de körs och vad de testar.)
+För att säkerställa att GraphQL API:et fungerar korrekt och uppfyller de krav som ställs på det gjorde jag manuella tester med Postman.
+
 
 ## 6. Reflektion
 
 -   Vad har varit utmanande i uppgiften?
--   Vad skulle kunna förbättras?
+    - Utmaningen var att konfiguera och använda GraphQL för att definera muntationer och frågor en annan tankegång än traditionella REST API:er som va förvirande.
+  -   Vad skulle kunna förbättras?
+      - Felhantering kan förbättras genom att implementera mer detaljerade felinformation för varje GraphDL operationer.
 -   Eventuella lärdomar från implementationen.
+    - Ett viktig lärdom från den här uppgiften är att GraphQL ger mycket flexibillitet genom att låta användaren definera exakt vilken data de vill hämta eller maipulera.
 
 ---
 
