@@ -1,11 +1,10 @@
 # Uppgift 3: Implementera en enkel SOAP-webservice
 
-
-| Data            | Värde                                                                                             |
-|-----------------|---------------------------------------------------------------------------------------------------|
-| **Namn**        | David Andreasson                                                                                  |
-| **Email**       | 79davand@gafe.molndal.se                                                                          |
-| **GitHub-länk** | https://github.com/david-andreasson/api-webservices-final-assignment_79davand/tree/main/Uppgift_3 |
+| Data            | Värde                                                                     |
+| --------------- | ------------------------------------------------------------------------- |
+| **Namn**        | Ali Rezai                                                                 |
+| **Email**       | 00alirez01@gafe.molndal.se                                                |
+| **GitHub-länk** | https://github.com/xmozaffary/api-webservices-final-assignment_00alirez01 |
 ---
 
 ## 1. Beskrivning av uppgiften
